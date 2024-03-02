@@ -13,7 +13,7 @@ variable "prod" {
 
 resource "digitalocean_ssh_key" "ssh_key" {
   name       = "mykey"
-  public_key = var.prod
+  public_key = file(var.prod)
 }
 
 provider "digitalocean" {

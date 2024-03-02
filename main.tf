@@ -7,6 +7,10 @@ terraform {
   }
 }
 
+variable "prod" {
+  description = "Path to the public key file for the prod environment"
+}
+
 resource "digitalocean_ssh_key" "ssh_key" {
   name       = "mykey"
   public_key = var.prod

@@ -50,12 +50,6 @@ jobs:
         working-directory: infrastructure/
         run: terraform plan -input=false -out=terraform.plan # Create a Terraform plan.
 
-      - name: Manual Approval
-        uses: infa-sasatapathy/manual-approval@v1
-        with:
-          secret: ${{ secrets.TOKEN }} # Access the GitHub API token stored in GitHub Secrets.
-          approvers: infa-sasatapathy # Specify the approver's GitHub username.
-
       - name: Terraform Apply
         working-directory: infrastructure/
         run: terraform apply -auto-approve -input=false terraform.plan # Apply the Terraform plan.

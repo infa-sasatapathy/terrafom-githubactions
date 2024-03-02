@@ -15,11 +15,6 @@ resource "digitalocean_ssh_key" "ssh_key" {
 provider "digitalocean" {
 }
 
-variable "prod" {
-  description = "SSH public key contents"
-  type        = string
-}
-
 resource "digitalocean_droplet" "example" {
   name   = "example-droplet"
   region = "nyc1"

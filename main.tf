@@ -12,7 +12,7 @@ provider "digitalocean" {
 
 variable "prod" {
   description = "Path to the public key file for the prod environment"
-  default     = "${{ secrets.PROD_PUBLIC_KEY }}"
+  default     = "${{ secrets.SSH_KEY }}"
 }
 
 resource "digitalocean_ssh_key" "ssh_key" {

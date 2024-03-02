@@ -1,0 +1,61 @@
+# Define the name of the GitHub Actions workflow.
+name: 'example'
+
+# Specify when the workflow should run.
+on:
+  push: # Trigger the workflow on pushes to the main branch.
+    branches:
+      - main
+    paths:
+      - '**' # Watch for changes in all files.
+  pull_request: # Trigger the workflow on pull requests.
+
+# Define environment variables, which can be accessed securely.
+env:
+  DLOC_TOKEN: ${{ secrets.TOKEN }} # Access the secret 'DLOC_TOKEN' stored in GitHub Secrets.
+  TF_VAR_ssh_public_key: ${{ secrets.SSH_KEY }} # Access the SSH public key stored in GitHub Secrets.
+
+# Define permissions for the workflow.
+permissions:
+  contents: read # Allow reading repository contents.
+
+# Define the jobs to be executed.
+jobs:
+  infrastructure:
+    name: 'Example'
+    runs-on: ubuntu-latest # Use an Ubuntu-based runner.
+
+    environment: prod # Specify the environment (you may configure this as needed).
+
+    defaults:
+      run:
+        shell: bash # Set the shell for all steps to bash.
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: infrastructure # Checkout the repository to a directory named 'infrastructure'.
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7 # Set the desired Terraform version.
+
+      - name: Terraform Init
+        working-directory: infrastructure/
+        run: terraform init # Initialize Terraform in the 'infrastructure' directory.
+
+      - name: Terraform Plan
+        working-directory: infrastructure/
+        run: terraform plan -input=false -out=terraform.plan # Create a Terraform plan.
+
+      - name: Manual Approval
+        uses: infa-sasatapathy/manual-approval@v1
+        with:
+          secret: ${{ secrets.TOKEN }} # Access the GitHub API token stored in GitHub Secrets.
+          approvers: infa-sasatapathy # Specify the approver's GitHub username.
+
+      - name: Terraform Apply
+        working-directory: infrastructure/
+        run: terraform apply -auto-approve -input=false terraform.plan # Apply the Terraform plan.

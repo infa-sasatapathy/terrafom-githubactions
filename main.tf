@@ -13,7 +13,6 @@ resource "digitalocean_ssh_key" "ssh_key" {
 }
 
 provider "digitalocean" {
-  token = "dop_v1_089e597e5d3cc307369599d6b0ce2f08ef571576ecbc3d2e7044f2a31cfaffe5"
 }
 
 resource "digitalocean_droplet" "example" {

@@ -20,7 +20,7 @@ resource "digitalocean_droplet" "example" {
   region = "nyc1"
   size   = "s-1vcpu-1gb"
   image  = "ubuntu-20-04-x64"
-  ssh_keys = [
-    digitalocean_ssh_key.ssh_key.name
-  ]
+#  ssh_keys = [
+#    digitalocean_ssh_key.ssh_key.name
+#  ]
 }

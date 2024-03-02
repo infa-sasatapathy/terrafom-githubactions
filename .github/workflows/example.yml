@@ -48,7 +48,7 @@ jobs:
 
       - name: Terraform Plan
         working-directory: infrastructure/
-        run: terraform plan -input=false -out=terraform.plan -var="prod=${{ secrets.SSH_KEY }}"
+        run: terraform plan -input=false -out=terraform.plan
  # Create a Terraform plan.
 
       - name: Terraform Apply

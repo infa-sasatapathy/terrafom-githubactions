@@ -9,7 +9,7 @@ terraform {
 
 resource "digitalocean_ssh_key" "ssh_key" {
   name       = "mykey"
-  public_key = file("/Users/apple/terraform/id_rsa.pub")
+  public_key = var.prod
 }
 
 provider "digitalocean" {

@@ -7,16 +7,17 @@ terraform {
   }
 }
 
+provider "digitalocean" {
+}
+
 variable "prod" {
   description = "Path to the public key file for the prod environment"
+  default     = "${{ secrets.SSH_KEY }}"
 }
 
 resource "digitalocean_ssh_key" "ssh_key" {
   name       = "mykey"
   public_key = file(var.prod)
-}
-
-provider "digitalocean" {
 }
 
 resource "digitalocean_droplet" "example" {
@@ -25,7 +26,6 @@ resource "digitalocean_droplet" "example" {
   size   = "s-1vcpu-1gb"
   image  = "ubuntu-20-04-x64"
   ssh_keys = [
-    digitalocean_ssh_key.ssh_key.fingerprint
-    ]
+    digitalocean_ssh_key.ssh_key.name
+  ]
 }
-

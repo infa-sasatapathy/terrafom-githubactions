@@ -15,6 +15,10 @@ variable "prod" {
   default     = secrets.SSH_KEY
 }
 
+locals {
+  prod_public_key = "${{ secrets.SSH_KEY }}"
+}
+
 resource "digitalocean_ssh_key" "ssh_key" {
   name       = "mykey"
   public_key = file(var.prod)

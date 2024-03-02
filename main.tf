@@ -10,19 +10,10 @@ terraform {
 provider "digitalocean" {
 }
 
-variable "prod" {
-  description = "Path to the public key file for the prod environment"
-  default     = secrets.SSH_KEY
-}
-
-locals {
-  prod_public_key = "${{ secrets.SSH_KEY }}"
-}
-
-resource "digitalocean_ssh_key" "ssh_key" {
-  name       = "mykey"
-  public_key = file(var.prod)
-}
+#resource "digitalocean_ssh_key" "ssh_key" {
+#  name       = "mykey"
+#  public_key = file(var.prod)
+#}
 
 resource "digitalocean_droplet" "example" {
   name   = "example-droplet"
